@@ -1,0 +1,27 @@
+import requests
+from bs4 import BeautifulSoup
+
+def search_word_in_website(url, word):
+    # Send a GET request to the website
+    response = requests.get(url)
+    
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Parse the HTML content of the website
+        soup = BeautifulSoup(response.content, 'html.parser')
+        
+        # Find all the text content in the website
+        text_content = soup.get_text()
+        
+        # Check if the word is present in the text content
+        if word in text_content:
+            print(f"The word '{word}' was found on the website.")
+        else:
+            print(f"The word '{word}' was not found on the website.")
+    else:
+        print("Error: Failed to retrieve website content.")
+
+# Example usage
+website_url = "https://www.example.com"  # Replace with the website URL you want to search
+search_word = "example"  # Replace with the word you want to search for
+search_word_in_website(website_url, search_word)
